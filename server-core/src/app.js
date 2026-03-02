@@ -26,6 +26,15 @@ app.use('/api/v1/matches', matchRoutes);
 app.use('/api/v1/grounds', groundRoutes);
 app.use('/api/v1/bookings', bookingRoutes);
 
+// 6. DEFINE RELATIONSHIPS (Associations)
+// A User can host many matches; a Match belongs to one creator
+User.hasMany(Match, { foreignKey: 'creator_id' });
+Match.belongsTo(User, { foreignKey: 'creator_id', as: 'creator' });
+
+// A Ground can have many matches; a Match belongs to one ground
+Ground.hasMany(Match, { foreignKey: 'ground_id' });
+Match.belongsTo(Ground, { foreignKey: 'ground_id' });
+
 // 5. START SERVER & SYNC DATABASE
 const startServer = async () => {
   try {

@@ -13,3 +13,5 @@ router.post('/create', protect, matchController.createMatch);
 module.exports = router;
 // PATCH /api/v1/matches/:id/score
 router.patch('/:id/score', protect, matchController.updateMatchScore);
+// PATCH /api/v1/matches/:id/finish
+router.patch('/:id/finish', protect, matchController.finishMatch);
