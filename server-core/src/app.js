@@ -18,6 +18,11 @@ const app = express();
 
 // 3. MIDDLEWARE
 app.use(cors());
+// Add this logger to see all incoming traffic in Terminal 1
+app.use((req, res, next) => {
+  console.log(`📡 [${req.method}] ${req.url} - Token: ${req.headers.authorization ? 'Present' : 'MISSING'}`);
+  next();
+});
 app.use(express.json());
 
 // 4. REGISTER ROUTES (Versioned API)

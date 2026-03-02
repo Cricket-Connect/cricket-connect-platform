@@ -8,7 +8,7 @@ router.get('/', matchController.getAllMatches);
 router.get('/:id', matchController.getMatchById);
 
 // Protected Routes (Must be logged in)
-router.post('/create', protect, matchController.createMatch);
+router.post('/create', matchController.createMatch);
 
 module.exports = router;
 // PATCH /api/v1/matches/:id/score

@@ -1,4 +1,5 @@
 const Match = require('../../models/match.model');
+const User = require('../../models/user.model');
 const axios = require('axios'); // Required for Inter-Service Communication
 
 // 1. CREATE MATCH
@@ -6,8 +7,21 @@ exports.createMatch = async (req, res) => {
   try {
     const { ground_id, match_date } = req.body;
 
+    // For testing without auth: get first user from database
+    let creatorId = req.user?.id;
+    if (!creatorId) {
+      const firstUser = await User.findOne();
+      if (!firstUser) {
+        return res.status(400).json({ 
+          success: false, 
+          error: { message: "No users in database. Please create a user first." } 
+        });
+      }
+      creatorId = firstUser.id;
+    }
+
     const newMatch = await Match.create({
-      creator_id: req.user.id, // Derived from Auth Middleware
+      creator_id: creatorId,
       ground_id,
       match_date,
       status: 'CREATED'
