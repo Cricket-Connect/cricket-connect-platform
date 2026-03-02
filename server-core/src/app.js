@@ -1,29 +1,47 @@
 const express = require('express');
-const sequelize = require('./config/database');
-const authRoutes = require('./modules/auth/auth.routes');
-const matchRoutes = require('./modules/matches/match.routes'); // 1. Import Match Routes
-const Match = require('./models/match.model'); // 2. Import Match Model for Syncing
 const cors = require('cors');
+const sequelize = require('./config/database');
+
+// 1. IMPORT ALL MODELS (Required for Sequelize Sync)
+const User = require('./models/user.model');
+const Match = require('./models/match.model');
+const Ground = require('./models/ground.model');
+const Booking = require('./models/booking.model');
+
+// 2. IMPORT ALL ROUTES
+const authRoutes = require('./modules/auth/auth.routes');
+const matchRoutes = require('./modules/matches/match.routes');
+const groundRoutes = require('./modules/grounds/ground.routes');
+const bookingRoutes = require('./modules/bookings/booking.routes');
 
 const app = express();
+
+// 3. MIDDLEWARE
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// 4. REGISTER ROUTES (Versioned API)
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/matches', matchRoutes); // 3. Use Match Routes
+app.use('/api/v1/matches', matchRoutes);
+app.use('/api/v1/grounds', groundRoutes);
+app.use('/api/v1/bookings', bookingRoutes);
 
+// 5. START SERVER & SYNC DATABASE
 const startServer = async () => {
   try {
+    // Authenticate connection
     await sequelize.authenticate();
-    await sequelize.sync({ alter: true }); // This will create the 'matches' table
-    console.log('✅ PostgreSQL Connected & Tables Synced!');
+    
+    // sync({ alter: true }) updates tables without deleting data
+    await sequelize.sync({ alter: true }); 
+    
+    console.log('✅ PostgreSQL Connected & All Tables Synced!');
 
     app.listen(5000, () => {
       console.log('🚀 Server running on http://localhost:5000');
     });
   } catch (error) {
-    console.error('❌ Error:', error);
+    console.error('❌ Database Sync Error:', error);
   }
 };
 
