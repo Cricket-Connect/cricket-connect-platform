@@ -1,0 +1,42 @@
+.team-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.team-info {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.team-info h1 {
+  color: #333;
+  margin: 0 0 20px 0;
+}
+
+.team-info p {
+  color: #666;
+  margin: 10px 0;
+}
+
+.members-list {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.members-list h3 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.member {
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  color: #666;
+}

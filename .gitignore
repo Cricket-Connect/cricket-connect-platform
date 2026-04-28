@@ -1,0 +1,17 @@
+.env
+.env.local
+.DS_Store
+node_modules/
+dist/
+build/
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+
+# MongoDB
+data/
